@@ -78,28 +78,119 @@ void test1()
 	
 }
 
-class Add
+//class Add
+//{
+//public:
+//	int operator()(int a, int b);
+//	
+//};
+//
+//int Add :: operator()(int a, int b)
+//{
+//	return a + b;
+//}
+
+class Calculator
 {
 public:
-	int operator()(int a, int b);
-	
+	virtual int calculator(int a, int b) = 0;
 };
 
-int Add :: operator()(int a, int b)
+class Add :public Calculator
 {
-	return a + b;
-}
+public:
+	/*virtual */int calculator(int a, int b)
+	{
+		return a + b;
+	}
+};
 
+class Sub :public Calculator
+{
+public:
+	virtual int calculator(int a, int b)
+	{
+		return a - b;
+	}
+};
+
+class Mul :public Calculator
+{
+public:
+	virtual int calculator(int a, int b)
+	{
+		return a * b;
+	}
+};
+
+class Div :public Calculator
+{
+public:
+	virtual int calculator(int a, int b)
+	{
+		return a / b;
+	}
+};
 
 void test2()
 {
-	cout << Add()(1, 2) << endl;
+	Calculator* add = new Add;
+	cout << add->calculator(10, 100) << endl;
+	delete add;
+	add = NULL;
+
+	Calculator* sub = new Sub;
+	cout << sub->calculator(100, 10) << endl;
+	delete sub;
+	sub = NULL;
+
+	Calculator* mul = new Mul;
+	cout << mul->calculator(100, 10) << endl;
+	delete mul;
+	mul = NULL;
+
+	Calculator* div = new Div;
+	cout << div->calculator(100, 10) << endl;
+	delete div;
+	div = NULL;
+
+}
+
+class Animal
+{
+public:
+	virtual void Print()
+	{
+		cout << "Animal" << endl;
+	}
+};
+
+class Cat :public Animal
+{
+public:
+	void Print()
+	{
+		cout << "Cat" << endl;
+	}
+
+};
+
+void print(Animal& x)
+{
+	x.Print();
+}
+
+void test3()
+{
+	Cat cat;
+	print(cat);
 }
 
 int main()
 {
 	/*test1();*/
-	test2();
+	/*test2();*/
+	test3();
 
 	/*S s1;
 	s1.a = 10;
