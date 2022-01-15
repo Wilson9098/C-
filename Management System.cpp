@@ -419,10 +419,10 @@ void System::Sort()
 		SortbyID(arr,0,Arrsize-1);
 	}
 
-	/*if (select == 2)
+	if (select == 2)
 	{
-		SortbyName();
-	}*/
+		SortbyName(arr, 0, Arrsize - 1);
+	}
 
 	cout << "Sorted" << endl;
 	system("pause");
@@ -445,6 +445,13 @@ int System::ComparebyID(Person* a, Person* b)
 	return a->m_ID - b->m_ID;
 }
 
+int System::ComparebyName(Person* a, Person* b)
+{
+	assert(a && b);
+
+	return a->m_Name.compare(b->m_Name);
+}
+
 
 void System::PatitionbyID(Person** arr, const int L, const int R, int* ret)
 {
@@ -463,6 +470,36 @@ void System::PatitionbyID(Person** arr, const int L, const int R, int* ret)
 			Swap(arr, i++, ++pL);
 		}
 		else if (ComparebyID(arr[i], arr[R]) > 0)
+		{
+			Swap(arr, i, --pR);
+		}
+		else
+		{
+			i++;
+		}
+	}
+	Swap(arr, R, pR++);
+	ret[0] = pL;
+	ret[1] = pR;
+}
+
+void System::PatitionbyName(Person** arr, const int L, const int R, int* ret)
+{
+	assert(arr && ret);
+	if (L >= R)
+		return;
+
+	int pL = L - 1;
+	int pR = R;
+	int i = L;
+
+	while (i < pR)
+	{
+		if (ComparebyName(arr[i], arr[R]) < 0)
+		{
+			Swap(arr, i++, ++pL);
+		}
+		else if (ComparebyName(arr[i], arr[R]) > 0)
 		{
 			Swap(arr, i, --pR);
 		}
@@ -504,4 +541,60 @@ void System::SortbyID(Person** arr, const int L, const int R)
 	PatitionbyID(arr, L, R, ret);
 	SortbyID(arr, L, ret[0]);
 	SortbyID(arr, ret[1], R);
+}
+
+void System::SortbyName(Person** arr, const int L, const int R)
+{
+	assert(arr);
+	if (L >= R)
+		return;
+
+	srand((unsigned)time(NULL));
+	Swap(arr, R, L + rand() % (R - L + 1));
+	int ret[2] = { 0 };
+
+	PatitionbyName(arr, L, R, ret);
+	SortbyID(arr, L, ret[0]);
+	SortbyID(arr, ret[1], R);
+}
+
+void System::Empty()
+{
+	if (!Arrsize)
+	{
+		cout << "No Data" << endl;
+		return;
+	}
+
+	int select = 0;
+	do
+	{
+		cout << "Empty the System?" << endl;
+		cout << "1. Yes" << endl;
+		cout << "2. No" << endl;
+		cin >> select;
+	} while (select < 1 || select > 2);
+
+	if (select == 1)
+	{
+		ofstream file;
+		file.open("System.txt", ios::trunc);
+		file.close();
+
+		int i = 0;
+		for (i = 0; i < Arrsize; i++)
+		{
+			delete arr[i];
+		}
+		delete[] arr;
+		arr = new Person * [2];
+		Arrsize = 0;
+		Maxsize = 2;
+
+		cout << "Emptied" << endl;
+	}
+	
+	system("pause");
+	system("cls");
+
 }
