@@ -4,6 +4,7 @@
 using namespace std;
 #include <string>
 #include <list>
+#include <set>
 
 
 
@@ -21,6 +22,15 @@ public:
 	int m_Age;
 	int m_Height;
 
+};
+
+class compareName
+{
+public:
+	bool operator()(const Person& p1, const Person& p2)const
+	{
+		return p1.m_Name > p2.m_Name;
+	}
 };
 
 bool Compare(Person& p1, Person& p2)
@@ -62,9 +72,34 @@ void test()
 	}
 }
 
+void test1()
+{
+	set<Person, compareName> s1;
+
+	Person p1("A", 28, 180);
+	Person p2("B", 30, 190);
+	Person p3("C", 30, 178);
+	Person p4("D", 30, 166);
+	Person p5("E", 25, 188);
+
+	s1.insert(p1);
+	s1.insert(p2);
+	s1.insert(p3);
+	s1.insert(p4);
+	s1.insert(p5);
+
+	for (set<Person, compareName>::iterator it = s1.begin(); it != s1.end(); it++)
+	{
+		cout << "Name: " << it->m_Name << " " << "Age: " << it->m_Age << " " << "Height: " << it->m_Height << endl;
+	}
+
+}
+
 int main()
 {
-	test();
+	/*test();*/
+
+	test1();
 
 	return 0;
 }
