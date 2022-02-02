@@ -5,6 +5,7 @@ using namespace std;
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <numeric>
 
 
 
@@ -26,6 +27,16 @@ public:
 	bool operator==(const Person& p)
 	{
 		if (this->m_Age == p.m_Age/* && this->m_Name == p.m_Name*/)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+
+	bool operator<(const Person& p)
+	{
+		if (this->m_Name.compare(p.m_Name) > 0)
 		{
 			return true;
 		}
@@ -124,11 +135,68 @@ void test()
 	cout << "----------------------" << endl;
 
 	cout << count_if(v1.begin(), v1.end(), Age_greater30()) << endl;
+	cout << "----------------------" << endl;
+
+	sort(v.begin(), v.end());
+	for_each(v.begin(), v.end(), PrintPerson());
+	cout << "----------------------" << endl;
+
+	/*srand((unsigned)time(NULL));
+	random_shuffle(v.begin(), v.end());
+	for_each(v.begin(), v.end(), PrintPerson());
+	cout << "----------------------" << endl;*/
+
+	reverse(v.begin(), v.end());
+	for_each(v.begin(), v.end(), PrintPerson());
+	cout << "----------------------" << endl;
+
+	Person p("X", 100);
+	replace_if(v.begin(), v.end(), Age_greater30(),p);
+	for_each(v.begin(), v.end(), PrintPerson());
+	cout << "----------------------" << endl;
+
+	swap(v, v1);
+	for_each(v.begin(), v.end(), PrintPerson());
+	cout << "----------------------" << endl;
+
+
+
+}
+
+void myPrint(int val)
+{
+	cout << val << " ";
+}
+
+void test01()
+{
+	vector<int> v;
+	vector<int> v1;
+	vector<int> v2;
+
+	for (int i = 0; i < 10; i++)
+	{
+		v1.push_back(i);
+		v2.push_back(i + 1);
+	}
+
+	v.resize(v1.size() + v2.size());
+	merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v.begin());
+	for_each(v.begin(), v.end(), myPrint);
+	cout << endl;
+
+	int sum = accumulate(v.begin(), v.end(), 0);
+	cout << sum << endl;
+
+	fill(v.begin(), v.end(), 0); 
+	for_each(v.begin(), v.end(), myPrint);
+
 }
 
 int main()
 {
-	test();
+	/*test();*/
+	test01();
 
 	return 0;
 }
