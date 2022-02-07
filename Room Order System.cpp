@@ -3,6 +3,7 @@
 
 
 
+
 void showMenu()
 {
 	cout << "================ Welcome to Room Order System ===============" << endl;
@@ -21,37 +22,132 @@ void showMenu()
 	cout << "\t\t ----------------------------\n";
 }
 
-void Login(int type)
+void Login(string file, int type)
 {
+	ifstream ifs;
+	ifs.open(file, ios::in);
+	if (!ifs.is_open())
+	{
+		cout << "Can't open file" << endl;
+		ifs.close();
+		system("pause");
+		system("cls");
+		return;
+	}
 
-	int id = 0;
-	string name;
-	string psw;
+	int id_input = 0;
+	string name_input;
+	string psw_input;
 	if (type != 3)
 	{
 		cout << "Please input your ID: " << endl;
-		cin >> id;
+		cin >> id_input;
 	}
 
 	cout << "Please input your username: " << endl;
-	cin >> name;
+	cin >> name_input;
 	cout << "Please input your password: " << endl;
-	cin >> psw;
+	cin >> psw_input;
 
-	if (type == 1)
+	bool info = false;
+	if (type == 1)//student
 	{
-		//check
+		int id;
+		string name;
+		string psw;
+		while (ifs >> id && ifs >> name && ifs >> psw)
+		{
+			if (id == id_input && name == name_input && psw == psw_input)
+			{
+				info = true;
+				/*Student student(name, psw, id);*/
+				system("cls");
+				cout << "Welcome to student system" << endl;
+			}
+		}
 	}
-	else if (type == 2)
+	else if (type == 2)//teacher
 	{
-		//check
+		int id;
+		string name;
+		string psw;
+		while (ifs >> id && ifs >> name && ifs >> psw)
+		{
+			if (id == id_input && name == name_input && psw == psw_input)
+			{
+				info = true;
+				/*Teacher teacher(name, psw, id);*/
+				system("cls");
+				cout << "Welcome to teacher system" << endl;
+
+			}
+		}
 	}
-	else if (type == 3)
+	else if (type == 3)//manager
 	{
-		//check
+		string name;
+		string psw;
+		while (ifs >> name && ifs >> psw)
+		{
+			if (name == name_input && psw == psw_input)
+			{
+				info = true;
+				Manager manager(name, psw);
+				system("cls");
+				cout << "Welcome to manager system" << endl;
+				managerMenu(manager);
+			}
+		}
 	}
 
-	cout << "Your ID, Username or Password is incorrect" << endl;
+	if (!info)
+		cout << "Your ID, Username or Password is incorrect" << endl;
+
+	ifs.close();
 	system("pause");
 	system("cls");
+}
+
+void managerMenu(Manager& manager)
+{
+	int input;
+	manager.initVector();
+
+	do
+	{
+		cout << "Student Number: " << manager.m_Vs.size() << endl;
+		cout << "Teacher Number: " << manager.m_Vt.size() << endl;
+		cout << "Room Number: " << manager.m_Vr.size() << endl;
+		manager.operMenu();
+
+		cout << "Please Select: ";
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			manager.addUser();
+			break;
+		case 2:
+			manager.showAllUsers();
+			break;
+		case 3:
+			manager.showAllRooms();
+			break;
+		case 4:
+			manager.clearAllRecords();
+			break; 
+		case 0:
+			cout << "Logged out" << endl;
+			return;
+			break;
+		default:
+			cout << "Try Again" << endl;
+			system("pause");
+			system("cls");
+			break;
+		}
+	} while (input);
+
+
 }
