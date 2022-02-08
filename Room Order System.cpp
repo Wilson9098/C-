@@ -60,9 +60,10 @@ void Login(string file, int type)
 			if (id == id_input && name == name_input && psw == psw_input)
 			{
 				info = true;
-				/*Student student(name, psw, id);*/
+				Student student(name, psw, id);
 				system("cls");
 				cout << "Welcome to student system" << endl;
+				studentMenu(student);
 			}
 		}
 	}
@@ -150,4 +151,38 @@ void managerMenu(Manager& manager)
 	} while (input);
 
 
+}
+
+void studentMenu(Student& student)
+{
+	int input = -1;
+	student.initVector();
+
+	do
+	{
+		student.operMenu();
+		cout << "Please Select: ";
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			student.applyorder();
+			break;
+		case 2:
+			student.showMyOrder();
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 0:
+			break;
+		default:
+			cout << "Try Again" << endl;
+			system("pause");
+			system("cls");
+			break;
+		}
+	} while (input);
 }
