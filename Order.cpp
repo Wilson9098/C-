@@ -63,3 +63,23 @@ Order::Order()
 
 	ifs.close();
 }
+
+void Order::updateOrder()
+{
+	ofstream ofs;
+	ofs.open(ORDER_FILE, ios::out | ios::trunc);
+
+	for (int i = 0; i < this->m_OrderData.size(); i++)
+	{
+		ofs << "Date:" << this->m_OrderData[i + 1]["Date"] << " "
+			<< "Time:" << this->m_OrderData[i + 1]["Time"] << " "
+			<< "Name:" << this->m_OrderData[i + 1]["Name"] << " "
+			<< "ID:" << this->m_OrderData[i + 1]["ID"] << " "
+			<< "RoomNO:" << this->m_OrderData[i + 1]["RoomNO"] << " "
+			<< "Status:" << this->m_OrderData[i + 1]["Status"] << endl;
+
+	}
+
+
+	ofs.close();
+}
