@@ -173,8 +173,10 @@ void studentMenu(Student& student)
 			student.showMyOrder();
 			break;
 		case 3:
+			student.showAllOrder();
 			break;
 		case 4:
+			student.cancelOrder();
 			break;
 		case 0:
 			break;
