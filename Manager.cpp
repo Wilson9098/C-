@@ -20,12 +20,13 @@ void Manager::initVector()
 	this->m_Vr.clear();
 
 	ifstream ifs;
-	Student s;
 
+	Student s;
 	ifs.open(STUDENT_FILE, ios::in);
 	if (!ifs.is_open())
 	{
 		cout << "Can't Load Data" << endl;
+		ifs.close();
 		return;
 	}
 
