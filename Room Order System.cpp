@@ -77,10 +77,10 @@ void Login(string file, int type)
 			if (id == id_input && name == name_input && psw == psw_input)
 			{
 				info = true;
-				/*Teacher teacher(name, psw, id);*/
+				Teacher teacher(name, psw, id);
 				system("cls");
 				cout << "Welcome to teacher system" << endl;
-
+				teacherMenu(teacher);
 			}
 		}
 	}
@@ -140,7 +140,6 @@ void managerMenu(Manager& manager)
 			break; 
 		case 0:
 			cout << "Logged out" << endl;
-			return;
 			break;
 		default:
 			cout << "Try Again" << endl;
@@ -179,6 +178,7 @@ void studentMenu(Student& student)
 			student.cancelOrder();
 			break;
 		case 0:
+			cout << "Logged out" << endl;
 			break;
 		default:
 			cout << "Try Again" << endl;
@@ -188,3 +188,35 @@ void studentMenu(Student& student)
 		}
 	} while (input);
 }
+
+void teacherMenu(Teacher& teacher)
+{
+	int input = -1;
+
+	do
+	{
+		teacher.operMenu();
+		cout << "Please Select: ";
+		cin >> input;
+
+		switch (input)
+		{
+		case 1:
+			teacher.showAllOrder();
+			break;
+		case 2:
+			teacher.validOrder();
+			break;
+		case 0:
+			cout << "Logged out" << endl;
+			break;
+		default:
+			cout << "Try Again" << endl;
+			system("pause");
+			system("cls");
+			break;
+		}
+	} while (input);
+	
+}
+
