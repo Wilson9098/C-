@@ -153,7 +153,7 @@ void Student::showMyOrder()
 			}
 			else if (o.m_OrderData[i + 1]["Status"] == "2")
 			{
-				cout << "Status:" << "succeeded" << endl;
+				cout << "Status:" << "Passed" << endl;
 			}
 			else if (o.m_OrderData[i + 1]["Status"] == "0")
 			{
@@ -221,7 +221,7 @@ void Student::showAllOrder()
 			}
 			else if (o.m_OrderData[i + 1]["Status"] == "2")
 			{
-				cout << "Status:" << "succeeded" << endl;
+				cout << "Status:" << "Passed" << endl;
 			}
 			else if (o.m_OrderData[i + 1]["Status"] == "0")
 			{
@@ -293,7 +293,7 @@ void Student::cancelOrder()
 				}
 				else if (o.m_OrderData[i + 1]["Status"] == "2")
 				{
-					cout << "Status:" << "succeeded" << endl;
+					cout << "Status:" << "Passed" << endl;
 				}
 			}
 		}
